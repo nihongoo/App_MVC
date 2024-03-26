@@ -1,0 +1,89 @@
+﻿using App_Data.Models;
+using App_Data.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+
+namespace App_MVC.Controllers
+{
+    public class SanPhamController : Controller
+    {
+        Sd18302Net104Context _context;
+        ALLRepository<SanPham> _proRepo;
+        DbSet<SanPham> _product;
+        public SanPhamController()
+        {
+            //khởi tạo dbcontext
+            _context = new Sd18302Net104Context();
+            //khởi tạo repo với 2 tham số dbset và dbcontext
+            _product = _context.SanPhams;
+            _proRepo = new ALLRepository<SanPham>(_product, _context);
+        }
+
+        // GetAll danh sách SanPham
+        public IActionResult Index()
+        {
+            var SanPhamData = _proRepo.GetAll();
+            return View(SanPhamData);
+        }
+        public IActionResult Create()
+        {
+            GetThuongHieu(Guid.Empty);
+            GetLoaiSP(Guid.Empty);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateSanPham(SanPham SanPham)
+        {
+            try
+            {
+                SanPham.ProductId = Guid.NewGuid();
+                _proRepo.Create(SanPham);
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+            return Content(ex.Message);
+            }
+
+        }
+
+        public IActionResult Edit(Guid id)
+        {
+            GetThuongHieu(Guid.Empty);
+            GetLoaiSP(Guid.Empty);
+            var updateSanPham = _proRepo.GetByID(id);
+            return View(updateSanPham);
+        }
+        [HttpPost]
+        public IActionResult EditSanPham(SanPham SanPham)
+        {
+            _proRepo.Update(SanPham);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(Guid id)
+        {
+            _proRepo.Delete(id);
+            return RedirectToAction("Index");
+        }
+        // Thông tin Details
+        public IActionResult Details(Guid id)
+        {
+            var getSanPham = _proRepo.GetByID(id);
+            return View(getSanPham);
+        }
+        public void GetLoaiSP(Guid selected)
+        {
+            var loaiSPList = _context.LoaiSPs.ToList();
+            SelectList listItems = new SelectList(loaiSPList, "TypeId", "TypeName", selected);
+            ViewBag.SelectedList = listItems;
+        }
+        public void GetThuongHieu(Guid selected)
+        {
+            var thuongHieus = _context.ThuongHieus.ToList();
+            SelectList listItems = new SelectList(thuongHieus, "BrandId", "Name", selected);
+            ViewBag.BrandList = listItems;
+        }
+    }
+}

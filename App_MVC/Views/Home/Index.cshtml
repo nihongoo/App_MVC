@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var loginData = TempData["Login"];
+}
+
+<div class="text-center">
+    @{
+        if(loginData!= null)
+        {
+            <h1 class="display-4">Welcome @loginData</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome con gmak</h1>
+        }
+    }
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
