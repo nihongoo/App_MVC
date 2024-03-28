@@ -21,10 +21,25 @@ namespace App_MVC.Controllers
         }
 
         // GetAll danh sách user
-        public IActionResult Index()
+        public IActionResult Index(string name) // tham số name để tìm kiếm
         {
             var userData = _userRepo.GetAll();
-            return View(userData);
+            if (string.IsNullOrEmpty(name))
+            {
+                return View(userData);
+            }
+            else
+            {
+                var searchData = _userRepo.GetAll().Where(x => x.FullName.Contains(name)).ToList(); // Tìm theo tên           
+                ViewData["count"] = searchData.Count;
+                ViewBag.Count = searchData.Count;
+                if (searchData.Count == 0) // Nếu ko tìm thấy 
+                {
+                    return View(userData);
+                }
+                else return View(searchData); // có tìm thấy
+            }
+
         }
 
         public IActionResult Create()

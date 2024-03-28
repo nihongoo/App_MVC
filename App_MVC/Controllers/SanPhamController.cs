@@ -33,12 +33,19 @@ namespace App_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateSanPham(SanPham SanPham)
+        public IActionResult CreateSanPham(SanPham sanPham, IFormFile img)
         {
             try
             {
-                SanPham.ProductId = Guid.NewGuid();
-                _proRepo.Create(SanPham);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", img.FileName);
+                //thực hiện việc sao chép phai phai đc chọn vào thư mục root
+                var stream = new FileStream(path, FileMode.Create);
+                //thực hiện viêc sao chép ảnh vào thư mục root
+                img.CopyTo(stream);
+
+                sanPham.ProductId = Guid.NewGuid();
+                sanPham.Image = img.FileName;
+                _proRepo.Create(sanPham);
 
                 return RedirectToAction("Index");
             }

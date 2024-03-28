@@ -44,7 +44,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+    <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductId)
             </td>
@@ -67,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.ImportDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                <img src="~/img/@item.Image" alt="@item.Image" class="img-thumbnail">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
