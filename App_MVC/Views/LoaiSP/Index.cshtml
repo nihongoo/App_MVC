@@ -4,41 +4,61 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-center">
+    <h2>Danh Sách Loại Sản Phẩm</h2>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeName)
-            </td>
-            <td>
-                <button class="btn btn-info">
-                    <a asp-action="Edit" asp-route-id="@item.TypeId" class="btn-link">Edit</a>
-                </button> |
-                <a asp-action="Details" asp-route-id="@item.TypeId" class="btn btn-primary">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TypeId" class="btn btn-danger">Delete</a>
-
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="border rounded-3 p-3 shadow-sm">
+    <div class="d-flex justify-content-between">
+        <div>
+            <form action="/User/Index" method="get">
+                <div class="form-group d-flex align-items-center">
+                    <input class="form-control form-control-solid ps-13" style="width: 250px" type="text"
+                        id="searchInput" name="name" placeholder="Nhập chuỗi tìm kiếm...">
+                    <span>
+                        @* <input class="" type="submit" value="Search"> *@
+                        <button class="btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="">
+            <button class="btn btn-success">
+                <a class="text-decoration-none text-light" asp-action="Create">Create New</a>
+            </button>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TypeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TypeName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TypeId" class="btn btn-secondary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.TypeId" class="btn btn-primary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.TypeId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
