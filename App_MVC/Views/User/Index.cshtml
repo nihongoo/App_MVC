@@ -4,78 +4,106 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<form action="/User/Index" method="get">
-    <input type="text" id="searchInput" name="name" placeholder="Nhập chuỗi tìm kiếm...">
-    <input type="submit" value="Search">
-</form>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex justify-content-center">
+    <h2>Danh Sách User</h2>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.UserId }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.UserId  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.UserId  })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="border rounded-3 p-3 shadow-sm">
+    <div class="d-flex justify-content-between">
+        <div>
+            <form action="/User/Index" method="get">
+                <div class="form-group d-flex align-items-center">
+                    <input class="form-control form-control-solid ps-13" style="width: 250px" type="text"
+                        id="searchInput" name="name" placeholder="Nhập chuỗi tìm kiếm...">
+                    <span>
+                        <button class="btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div>
+
+
+            <button class="btn btn-success">
+                <a class="text-decoration-none text-light" asp-action="Create">Create New</a>
+            </button>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td class="col-wid">
+                        <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-secondary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-primary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .col-wid {
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
