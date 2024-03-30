@@ -8,58 +8,49 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/App_MVC.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/style.css">
 </head>
 
 <body>
-	<div class="container-fluid">
-
-	</div>
-	<div class="container-fluid">
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="row">
-			<div class="sidebar" style="width: 250px">
-				<div class="navbar-brand">
-					<img style="width: 250px" src="~/Logo/LOGO_XL_Reverse_color.jpg" alt="Dân chơi cổ ngữ bili">
-				</div>
-				<ul class="nav flex-column">
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Hiển thị
-							danh sách user</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="SanPham" asp-action="Index">Danh
-							Sách Sản Phẩm</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="ThuongHieu"
-							asp-action="Index">Brand</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="LoaiSP" asp-action="Index">Loại
-							SP</a>
-					</li>
-				</ul>
+	<div class="d-flex" id="wrapper">
+		<!-- Sidebar-->
+		<div class="border-end bg-dark" id="sidebar-wrapper">
+			<div class="sidebar-heading border-bottom border-dark text-bg-dark">Start Bootstrap</div>
+			<div class="list-group list-group-flush">
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="Home" asp-action="Index">Home</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="Home" asp-action="Privacy">Privacy</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
+					href="#!">Overview</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
+					href="#!">Events</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
+					href="#!">Profile</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
+					href="#!">Status</a>
 			</div>
-
-			<div class="col-md-9">
-				<div style="min-height: 82px;" class="bg-success">
-					aaaaa
+		</div>
+		<!-- Page content wrapper-->
+		<div id="page-content-wrapper">
+			<!-- Top navigation-->
+			<nav class="navbar navbar-expand-lg vw-100 navbar-light bg-light border-bottom">
+				<div class="container-fluid">
+					<button class="btn" id="sidebarToggle" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
 				</div>
+			</nav>
+			<!-- Page content-->
+			<div class="container-fluid">
+				<h1 class="mt-4">Simple Sidebar</h1>
 				<main role="main" class="pb-3">
 					@RenderBody()
 				</main>
 			</div>
 		</div>
 	</div>
+
 
 	<footer class="border-top footer text-muted">
 		<div class="container">
