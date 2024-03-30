@@ -15,20 +15,24 @@
 	<div class="d-flex" id="wrapper">
 		<!-- Sidebar-->
 		<div class="border-end bg-dark" id="sidebar-wrapper">
-			<div class="sidebar-heading border-bottom border-dark text-bg-dark">Start Bootstrap</div>
+			<div class="sidebar-heading border-bottom border-dark text-bg-dark">
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+					<img style="width:200px" src="~/Logo/Logo_XL_Transparent.png" alt="dân chơi cổ ngữ">
+				</a>
+			</div>
 			<div class="list-group list-group-flush">
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
 					asp-controller="Home" asp-action="Index">Home</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
 					asp-controller="Home" asp-action="Privacy">Privacy</a>
-				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
-					href="#!">Overview</a>
-				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
-					href="#!">Events</a>
-				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
-					href="#!">Profile</a>
-				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3"
-					href="#!">Status</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="User" asp-action="Index">Hiển thị danh sách user</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="ThuongHieu" asp-action="Index">Brand</a>
+				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
+					asp-controller="LoaiSP" asp-action="Index">Loại SP</a>
 			</div>
 		</div>
 		<!-- Page content wrapper-->
@@ -43,20 +47,12 @@
 			</nav>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h1 class="mt-4">Simple Sidebar</h1>
 				<main role="main" class="pb-3">
 					@RenderBody()
 				</main>
 			</div>
 		</div>
 	</div>
-
-
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2024 - App_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</div>
-	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
