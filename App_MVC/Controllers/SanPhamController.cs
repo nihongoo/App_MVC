@@ -23,7 +23,27 @@ namespace App_MVC.Controllers
         // GetAll danh sách SanPham
         public IActionResult Index()
         {
-            var SanPhamData = _proRepo.GetAll();
+            //var SanPhamData = _proRepo.GetAll();
+            //return View(SanPhamData);
+            var SanPhamData = from sp in _context.SanPhams
+                              join lsp in _context.LoaiSPs
+                              on sp.ProductTypeId equals lsp.TypeId
+                              join th in _context.ThuongHieus
+                              on sp.BrandId equals th.BrandId
+                              select new SanPham
+                              {
+                                  ProductId = sp.ProductId,
+                                  Name = sp.Name,
+                                  Price = sp.Price,
+                                  ProductTypeId = lsp.TypeId,
+                                  BrandId = th.BrandId,
+                                  Material = sp.Material,
+                                  ImportDate = sp.ImportDate,
+                                  Image = sp.Image,
+                                  Quantity = sp.Quantity,
+                                  LoaiSP = lsp,
+                                  ThuongHieu = th
+                              };
             return View(SanPhamData);
         }
         public IActionResult Create()
