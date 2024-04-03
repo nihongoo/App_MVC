@@ -23,6 +23,15 @@ namespace App_MVC.Controllers
         // GetAll danh sách user
         public IActionResult Index(string name) // tham số name để tìm kiếm
         {
+            var sessionData = HttpContext.Session.GetString("user");
+            if (sessionData == null)
+            {
+                ViewData["mes"] = "Bạn chưa đăng nhập hoặc phiên đăng nhập đã hết hạn";
+            }
+            else
+            {
+                ViewData["mes"] = $"Chào mừng {sessionData} đến với unfinished square integer";
+            }
             var userData = _userRepo.GetAll();
             if (string.IsNullOrEmpty(name))
             {
@@ -89,6 +98,7 @@ namespace App_MVC.Controllers
                 // return Content("Đăng nhập thất bại, gmak vl");
                 //dùng temdata để lưu trữ dữ liệu đăng nhập tạm thời
                 TempData["Login"] = User.FullName;
+                HttpContext.Session.SetString("user", User.FullName);
                 return RedirectToAction("Index", "Home");
             }
             else return Content("Gmak"); ;

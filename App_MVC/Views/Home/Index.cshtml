@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     var loginData = TempData["Login"];
+    var message = ViewData["mes"];
 }
 
 <div class="text-center">
@@ -14,5 +15,18 @@
             <h1 class="display-4">Welcome con gmak</h1>
         }
     }
+
+    <p>
+        @{
+            if(message!= null)
+            {
+                <h1 class="display-4">@message</h1>
+            }
+            else
+            {
+                <h1 class="display-4"> session null</h1>
+            }
+    }
+        </p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

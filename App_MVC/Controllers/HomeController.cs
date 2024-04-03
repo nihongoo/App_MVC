@@ -15,7 +15,16 @@ namespace App_MVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+			var sessionData = HttpContext.Session.GetString("user");
+			if (sessionData == null)
+			{
+				ViewData["mes"] = "Bạn chưa đăng nhập hoặc phiên đăng nhập đã hết hạn";
+			}
+			else
+			{
+				ViewData["mes"] = $"Chào mừng {sessionData} đến với unfinished square integer";
+			}
+			return View();
         }
 
         public IActionResult Privacy()
