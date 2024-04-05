@@ -19,6 +19,7 @@ namespace App_Data.Configuration
             builder.Property(p => p.DeliveryDate).HasColumnName("Ngày Giao Hàng").HasColumnType("datetime");
             builder.Property(p => p.Address).HasColumnName("Địa chỉ").HasColumnType("nvarchar(255)");
             builder.Property(p => p.Status).HasColumnName("Trạng thái").HasColumnType("nvarchar(50)");
+            builder.HasOne(x => x.User).WithMany(x => x.HoaDon).HasForeignKey(x => x.UserId);
         }
     }
 }

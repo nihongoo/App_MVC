@@ -122,8 +122,8 @@ namespace App_Data.Migrations
                 {
                     table.PrimaryKey("PK_Carts", x => x.CartId);
                     table.ForeignKey(
-                        name: "FK_Carts_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Carts_User_CartId",
+                        column: x => x.CartId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -156,15 +156,14 @@ namespace App_Data.Migrations
                 columns: table => new
                 {
                     SizeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SanPhamProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductSizes", x => new { x.ProductId, x.SizeId });
                     table.ForeignKey(
-                        name: "FK_ProductSizes_Products_SanPhamProductId",
-                        column: x => x.SanPhamProductId,
+                        name: "FK_ProductSizes_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -181,24 +180,22 @@ namespace App_Data.Migrations
                 columns: table => new
                 {
                     CartDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    SốLượng = table.Column<int>(name: "Số Lượng", type: "int", nullable: false),
-                    GioHangCartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SanPhamProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SốLượng = table.Column<int>(name: "Số Lượng", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CartDetails", x => x.CartDetailId);
                     table.ForeignKey(
-                        name: "FK_CartDetails_Carts_GioHangCartId",
-                        column: x => x.GioHangCartId,
+                        name: "FK_CartDetails_Carts_CartId",
+                        column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "CartId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartDetails_Products_SanPhamProductId",
-                        column: x => x.SanPhamProductId,
+                        name: "FK_CartDetails_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -213,22 +210,20 @@ namespace App_Data.Migrations
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SizeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SốLượng = table.Column<int>(name: "Số Lượng", type: "int", nullable: false),
-                    ĐơnGiá = table.Column<decimal>(name: "Đơn Giá", type: "decimal(18,2)", nullable: false),
-                    HoaDonInvoiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SanPhamProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ĐơnGiá = table.Column<decimal>(name: "Đơn Giá", type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvoiceDetails", x => x.InvoiceDetailId);
                     table.ForeignKey(
-                        name: "FK_InvoiceDetails_Invoices_HoaDonInvoiceId",
-                        column: x => x.HoaDonInvoiceId,
+                        name: "FK_InvoiceDetails_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
                         principalTable: "Invoices",
                         principalColumn: "InvoiceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InvoiceDetails_Products_SanPhamProductId",
-                        column: x => x.SanPhamProductId,
+                        name: "FK_InvoiceDetails_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -241,29 +236,24 @@ namespace App_Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_GioHangCartId",
+                name: "IX_CartDetails_CartId",
                 table: "CartDetails",
-                column: "GioHangCartId");
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartDetails_SanPhamProductId",
+                name: "IX_CartDetails_ProductId",
                 table: "CartDetails",
-                column: "SanPhamProductId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserId",
-                table: "Carts",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetails_HoaDonInvoiceId",
+                name: "IX_InvoiceDetails_InvoiceId",
                 table: "InvoiceDetails",
-                column: "HoaDonInvoiceId");
+                column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetails_SanPhamProductId",
+                name: "IX_InvoiceDetails_ProductId",
                 table: "InvoiceDetails",
-                column: "SanPhamProductId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceDetails_SizeId",
@@ -284,11 +274,6 @@ namespace App_Data.Migrations
                 name: "IX_Products_ProductTypeId",
                 table: "Products",
                 column: "ProductTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductSizes_SanPhamProductId",
-                table: "ProductSizes",
-                column: "SanPhamProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductSizes_SizeId",

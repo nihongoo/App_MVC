@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App_Data.Migrations
 {
     [DbContext(typeof(Sd18302Net104Context))]
-    [Migration("20240326075857_LiemKhiets")]
-    partial class LiemKhiets
+    [Migration("20240405160807_LiemKhiet")]
+    partial class LiemKhiet
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,27 +76,21 @@ namespace App_Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("GioHangCartId")
+                    b.Property<Guid>("CartId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasColumnName("Số Lượng");
 
-                    b.Property<Guid>("SanPhamProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CartDetailId");
 
-                    b.HasIndex("GioHangCartId");
+                    b.HasIndex("CartId");
 
-                    b.HasIndex("SanPhamProductId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartDetails", (string)null);
                 });
@@ -141,9 +135,6 @@ namespace App_Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("HoaDonInvoiceId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uniqueidentifier");
 
@@ -154,9 +145,6 @@ namespace App_Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Số Lượng");
 
-                    b.Property<Guid>("SanPhamProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("SizeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -166,9 +154,9 @@ namespace App_Data.Migrations
 
                     b.HasKey("InvoiceDetailId");
 
-                    b.HasIndex("HoaDonInvoiceId");
+                    b.HasIndex("InvoiceId");
 
-                    b.HasIndex("SanPhamProductId");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("SizeId");
 
@@ -263,12 +251,7 @@ namespace App_Data.Migrations
                     b.Property<Guid>("SizeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SanPhamProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ProductId", "SizeId");
-
-                    b.HasIndex("SanPhamProductId");
 
                     b.HasIndex("SizeId");
 
@@ -341,7 +324,7 @@ namespace App_Data.Migrations
             modelBuilder.Entity("App_Data.Models.GioHang", b =>
                 {
                     b.HasOne("App_Data.Models.User", "User")
-                        .WithMany()
+                        .WithMany("GioHang")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -352,14 +335,14 @@ namespace App_Data.Migrations
             modelBuilder.Entity("App_Data.Models.GioHangCT", b =>
                 {
                     b.HasOne("App_Data.Models.GioHang", "GioHang")
-                        .WithMany()
-                        .HasForeignKey("GioHangCartId")
+                        .WithMany("GioHangCTs")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("App_Data.Models.SanPham", "SanPham")
-                        .WithMany()
-                        .HasForeignKey("SanPhamProductId")
+                        .WithMany("GioHangCTs")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -383,18 +366,18 @@ namespace App_Data.Migrations
                 {
                     b.HasOne("App_Data.Models.HoaDon", "HoaDon")
                         .WithMany("HoaDonCT")
-                        .HasForeignKey("HoaDonInvoiceId")
+                        .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("App_Data.Models.SanPham", "SanPham")
-                        .WithMany()
-                        .HasForeignKey("SanPhamProductId")
+                        .WithMany("HoaDonCTs")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("App_Data.Models.Size", "Size")
-                        .WithMany()
+                        .WithMany("HoaDonCTs")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -428,13 +411,13 @@ namespace App_Data.Migrations
             modelBuilder.Entity("App_Data.Models.SizeSanPham", b =>
                 {
                     b.HasOne("App_Data.Models.SanPham", "SanPham")
-                        .WithMany()
-                        .HasForeignKey("SanPhamProductId")
+                        .WithMany("SizeSanPhams")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("App_Data.Models.Size", "Size")
-                        .WithMany()
+                        .WithMany("SizeSanPhams")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -442,6 +425,11 @@ namespace App_Data.Migrations
                     b.Navigation("SanPham");
 
                     b.Navigation("Size");
+                });
+
+            modelBuilder.Entity("App_Data.Models.GioHang", b =>
+                {
+                    b.Navigation("GioHangCTs");
                 });
 
             modelBuilder.Entity("App_Data.Models.HoaDon", b =>
@@ -454,6 +442,22 @@ namespace App_Data.Migrations
                     b.Navigation("sanPhams");
                 });
 
+            modelBuilder.Entity("App_Data.Models.SanPham", b =>
+                {
+                    b.Navigation("GioHangCTs");
+
+                    b.Navigation("HoaDonCTs");
+
+                    b.Navigation("SizeSanPhams");
+                });
+
+            modelBuilder.Entity("App_Data.Models.Size", b =>
+                {
+                    b.Navigation("HoaDonCTs");
+
+                    b.Navigation("SizeSanPhams");
+                });
+
             modelBuilder.Entity("App_Data.Models.ThuongHieu", b =>
                 {
                     b.Navigation("sanPhams");
@@ -461,6 +465,8 @@ namespace App_Data.Migrations
 
             modelBuilder.Entity("App_Data.Models.User", b =>
                 {
+                    b.Navigation("GioHang");
+
                     b.Navigation("HoaDon");
                 });
 #pragma warning restore 612, 618

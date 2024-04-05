@@ -4,6 +4,7 @@ using App_Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App_Data.Migrations
 {
     [DbContext(typeof(Sd18302Net104Context))]
-    partial class Sd18302Net104ContextModelSnapshot : ModelSnapshot
+    [Migration("20240405160533_LiemKhiets")]
+    partial class LiemKhiets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,6 @@ namespace App_Data.Migrations
             modelBuilder.Entity("App_Data.Models.GioHang", b =>
                 {
                     b.Property<Guid>("CartId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
@@ -61,8 +63,6 @@ namespace App_Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CartId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Carts", (string)null);
                 });
@@ -322,7 +322,7 @@ namespace App_Data.Migrations
                 {
                     b.HasOne("App_Data.Models.User", "User")
                         .WithMany("GioHang")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

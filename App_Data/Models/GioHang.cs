@@ -15,5 +15,7 @@ namespace App_Data.Models
         public DateTime CreationDate { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual ICollection<GioHangCT> GioHangCTs { get; set; }
     }
 }

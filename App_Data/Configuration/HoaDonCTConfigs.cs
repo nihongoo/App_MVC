@@ -17,6 +17,9 @@ namespace App_Data.Configuration
             builder.HasKey(p => p.InvoiceDetailId);
             builder.Property(p => p.Quantity).HasColumnName("Số Lượng").HasColumnType("int");
             builder.Property(p => p.UnitPrice).HasColumnName("Đơn Giá").HasColumnType("decimal(18,2)");
+            builder.HasOne(x => x.HoaDon).WithMany(x => x.HoaDonCT).HasForeignKey(x => x.InvoiceId);
+            builder.HasOne(x => x.SanPham).WithMany(x => x.HoaDonCTs).HasForeignKey(x => x.ProductId);
+            builder.HasOne(x => x.Size).WithMany(x => x.HoaDonCTs).HasForeignKey(x => x.SizeId);
         }
     }
 }

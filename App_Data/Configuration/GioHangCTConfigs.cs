@@ -16,6 +16,8 @@ namespace App_Data.Configuration
             builder.ToTable("CartDetails");
             builder.HasKey(p => p.CartDetailId);
             builder.Property(p => p.Quantity).HasColumnName("Số Lượng").HasColumnType("int");
+            builder.HasOne(x => x.GioHang).WithMany(x => x.GioHangCTs).HasForeignKey(x => x.CartId);
+            builder.HasOne(x => x.SanPham).WithMany(x => x.GioHangCTs).HasForeignKey(x => x.ProductId);
         }
     }
 }

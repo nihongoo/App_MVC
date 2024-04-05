@@ -11,5 +11,9 @@ namespace App_Data.Models
         public Guid SizeId { get; set; }
 
         public string SizeName { get; set; }
+        
+        public virtual ICollection<SizeSanPham> SizeSanPhams { get; set; }
+
+        public virtual ICollection<HoaDonCT> HoaDonCTs { get; set; }
     }
 }

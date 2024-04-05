@@ -26,5 +26,7 @@ namespace App_Data.Models
 
         public virtual ICollection<HoaDon> HoaDon { get; set; }
 
+        public virtual ICollection<GioHang> GioHang { get; set;}
+
     }
 }

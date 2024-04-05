@@ -16,6 +16,7 @@ namespace App_Data.Configuration
             builder.ToTable("Carts");
             builder.HasKey(p => p.CartId);
             builder.Property(p => p.CreationDate).HasColumnName("Ngày Tạo").HasColumnType("datetime");
+            builder.HasOne(x => x.User).WithMany(x => x.GioHang).HasForeignKey(x => x.UserId);
         }
     }
 }

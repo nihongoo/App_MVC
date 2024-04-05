@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App_Data.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace App_Data.Configuration
 {
@@ -15,6 +16,8 @@ namespace App_Data.Configuration
         {
             builder.ToTable("ProductSizes");
             builder.HasKey(p => new { p.ProductId, p.SizeId });
+            builder.HasOne(x => x.Size).WithMany(x => x.SizeSanPhams).HasForeignKey(x => x.SizeId);
+            builder.HasOne(x => x.SanPham).WithMany(x => x.SizeSanPhams).HasForeignKey(x => x.ProductId);
         }
     }
 }

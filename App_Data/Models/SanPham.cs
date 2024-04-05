@@ -29,5 +29,11 @@ namespace App_Data.Models
         public virtual LoaiSP LoaiSP{ get; set; }
 
         public virtual ThuongHieu ThuongHieu { get; set; }
+
+        public virtual ICollection<HoaDonCT> HoaDonCTs { get; set; }
+
+        public virtual ICollection<SizeSanPham> SizeSanPhams { get; set; }
+
+        public virtual ICollection<GioHangCT> GioHangCTs { get; set; }
     }
 }
