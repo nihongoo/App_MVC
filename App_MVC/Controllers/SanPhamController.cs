@@ -13,11 +13,8 @@ namespace App_MVC.Controllers
         DbSet<SanPham> _product;
         public SanPhamController()
         {
-            //khởi tạo dbcontext
-            _context = new Sd18302Net104Context();
-            //khởi tạo repo với 2 tham số dbset và dbcontext
-            _product = _context.SanPhams;
-            _proRepo = new ALLRepository<SanPham>(_product, _context);
+            _context = context;
+            _proRepo = new ALLRepository<SanPham>(_context.SanPhams, _context);
         }
 
         // GetAll danh sách SanPham
