@@ -3,6 +3,7 @@ using App_Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 
 namespace App_MVC.Controllers
 {
@@ -21,7 +22,7 @@ namespace App_MVC.Controllers
         }
 
         // GetAll danh sách user
-        public IActionResult Index(string name) // tham số name để tìm kiếm
+        public IActionResult Index(string name)
         {
             var sessionData = HttpContext.Session.GetString("user");
             if (sessionData == null)
@@ -32,6 +33,7 @@ namespace App_MVC.Controllers
             {
                 ViewData["mes"] = $"Chào mừng {sessionData} đến với unfinished square integer";
             }
+
             var userData = _userRepo.GetAll();
             if (string.IsNullOrEmpty(name))
             {
@@ -39,16 +41,18 @@ namespace App_MVC.Controllers
             }
             else
             {
-                var searchData = _userRepo.GetAll().Where(x => x.FullName.Contains(name)).ToList(); // Tìm theo tên           
+                var searchData = _userRepo.GetAll().Where(x => x.FullName.Contains(name)).ToList();
                 ViewData["count"] = searchData.Count;
                 ViewBag.Count = searchData.Count;
-                if (searchData.Count == 0) // Nếu ko tìm thấy 
+                if (searchData.Count == 0)
                 {
                     return View(userData);
                 }
-                else return View(searchData); // có tìm thấy
+                else
+                {
+                    return View(searchData);
+                }
             }
-
         }
 
         public IActionResult Create()
@@ -90,18 +94,20 @@ namespace App_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string UserName, string PassWord)// valid
+        public IActionResult Login(string UserName, string PassWord)
         {
-            var User = _userRepo.GetAll().FirstOrDefault(p=>p.Username == UserName && p.Password == PassWord);
+            var User = _userRepo.GetAll().FirstOrDefault(p => p.Username == UserName && p.Password == PassWord);
             if (User != null)
             {
-                // return Content("Đăng nhập thất bại, gmak vl");
-                //dùng temdata để lưu trữ dữ liệu đăng nhập tạm thời
-                TempData["Login"] = User.FullName;
-                HttpContext.Session.SetString("user", User.FullName);
-                return RedirectToAction("Index", "Home");
+                //TempData["Login"] = User.FullName;
+                var jsonData = JsonConvert.SerializeObject(User);
+                HttpContext.Session.SetString("user", jsonData);
+                return RedirectToAction("Create", "GioHang");
             }
-            else return Content("Gmak"); ;
+            else
+            {
+                return Content("Đăng nhập thất bại");
+            }
         }
     }
 }

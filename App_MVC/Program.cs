@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(option =>
 {
-    option.IdleTimeout = TimeSpan.FromSeconds(5);
+    option.IdleTimeout = TimeSpan.FromSeconds(15);
 });
 
 var app = builder.Build();

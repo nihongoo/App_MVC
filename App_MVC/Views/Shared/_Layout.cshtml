@@ -22,17 +22,17 @@
 			</div>
 			<div class="list-group list-group-flush">
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="Home" asp-action="Index">Home</a>
+				   asp-controller="Home" asp-action="Index">Home</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="Home" asp-action="Privacy">Privacy</a>
+				   asp-controller="SanPham" asp-action="SanPhamU">Privacy</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="User" asp-action="Index">Hiển thị danh sách user</a>
+				   asp-controller="User" asp-action="Index">Hiển thị danh sách user</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a>
+				   asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="ThuongHieu" asp-action="Index">Brand</a>
+				   asp-controller="ThuongHieu" asp-action="Index">Brand</a>
 				<a class="list-group-item list-group-item-action list-group-item-dark text-bg-dark p-3" asp-area=""
-					asp-controller="LoaiSP" asp-action="Index">Loại SP</a>
+				   asp-controller="LoaiSP" asp-action="Index">Loại SP</a>
 			</div>
 		</div>
 		<!-- Page content wrapper-->
@@ -44,12 +44,11 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div>
-						@{
-							var message = ViewData["mes"];
-						}
-						<p>
-							@message
-						</p>
+						<div class="me-4">
+							<a asp-controller="GioHangCT" asp-action="Index">
+								<i class="fa-solid fa-cart-shopping fa-xl"></i>
+							</a>
+						</div>
 					</div>
 				</div>
 			</nav>

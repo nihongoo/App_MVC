@@ -1,5 +1,38 @@
 ﻿@model IEnumerable<App_Data.Models.SanPham>
 
-@{
-    ViewData["Title"] = "San Pham";
-}
+<div class="d-flex justify-content-center">
+    <h1>Sản phẩm</h1>
+</div>
+<div class="d-flex">
+    <div class="row justify-content-Evenly mt-2 ps-5">
+        @foreach (var item in Model)
+        {
+            <div class="border rounded-3 m-3 position-relative" style="width: 250px;">
+                <span class="badge bg-success position-absolute">còn hàng</span>
+                <div style="min-height:310px">
+                    <img src="~/img/@item.Image" alt="@item.Image" style="width:100%" class="img-thumbnail">
+                </div>
+                <div class="d-flex my-2 justify-content-center">
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mb-2">
+                        <a href="#" class="btn btn-success rounded-pill">
+                            Mua ngay
+                        </a>
+                        <a href="#" class="btn btn-success rounded-pill mt-2">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
