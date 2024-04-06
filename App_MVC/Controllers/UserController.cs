@@ -64,6 +64,15 @@ namespace App_MVC.Controllers
         {
             user.UserId = Guid.NewGuid();
             _userRepo.Create(user);
+            //tạo user = tạo giỏ hàng mới
+            var giohang = new GioHang()
+            {
+                CartId = user.UserId,
+                UserId = user.UserId,
+                CreationDate = DateTime.Now
+            };
+            _context.GioHangs.Add(giohang);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -100,9 +109,9 @@ namespace App_MVC.Controllers
             if (User != null)
             {
                 //TempData["Login"] = User.FullName;
-                var jsonData = JsonConvert.SerializeObject(User);
-                HttpContext.Session.SetString("user", jsonData);
-                return RedirectToAction("Create", "GioHang");
+                HttpContext.Session.SetString("user", User.UserId.ToString());
+                //var jsonData = JsonConvert.SerializeObject(User);
+                return RedirectToAction("SanPhamU", "SanPham");
             }
             else
             {

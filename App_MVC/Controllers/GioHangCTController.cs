@@ -3,6 +3,7 @@ using App_Data.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace App_MVC.Controllers
 {
@@ -31,27 +32,20 @@ namespace App_MVC.Controllers
             return View();
         }
 
-        // GET: GioHangCTController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         // POST: GioHangCTController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(GioHangCT gioHangCT)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            //gioHangCT.CartDetailId = Guid.NewGuid();
+            //gioHangCT.Quantity = 1;
+            //gioHangCT.CartId = (Guid)ViewData["idgh"];
+            //gioHangCT.ProductId = (Guid)ViewData["idsp"];
+            //_gioHangCTRepo.Create(gioHangCT);
+            //return RedirectToAction("SanPhanU", "Sanpham");
+            return View();
         }
-
         // GET: GioHangCTController/Edit/5
         public ActionResult Edit(int id)
         {

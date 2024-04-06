@@ -70,18 +70,38 @@ namespace App_MVC.Controllers
             return View(SanPhamData);
         }
 
-        public IActionResult addCart(Guid id)
+        public IActionResult addCart(Guid id, int soLuong)
         {
-            var sp = _product.Find(id);
-            if(sp == null)
+            var loginData = HttpContext.Session.GetString("user");
+            if (loginData == null)
             {
-                return NotFound("không có sản phẩm");
+                return Content("Chưa đăng nhập, gmak vl");
             }
             else
             {
-                var jsonData = JsonConvert.SerializeObject(sp);
-                HttpContext.Session.SetString("addCart", jsonData);
-                return RedirectToAction("Create", "GioHang");
+                Guid UserID = Guid.Parse(loginData);//lấy ra id cua khách-giỏ hàng
+                
+                var allCart = _context.GioHangCTs.FirstOrDefault(x => x.ProductId == id && x.CartId == UserID);
+                if (allCart != null)
+                {
+                    //check số lượng có lớn hơn với số tồn kho ko
+                    allCart.Quantity =  allCart.Quantity + soLuong;
+                    _context.GioHangCTs.Update(allCart);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    GioHangCT ghct = new GioHangCT()
+                    {
+                        CartDetailId = Guid.NewGuid(),
+                        CartId = UserID,
+                        Quantity = soLuong,
+                        ProductId = id
+                    };
+                    _context.GioHangCTs.Add(ghct); 
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("Index");
             }
         }
 

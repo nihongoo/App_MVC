@@ -34,36 +34,37 @@ namespace App_MVC.Controllers
 		[ValidateAntiForgeryToken]
         public ActionResult Create(GioHang gioHang)
         {
-            try
-            {
-                if (HttpContext.Session.Keys.Contains("user"))
-                {
-                    var jsonData = HttpContext.Session.GetString("user");
-                    var userData = JsonConvert.DeserializeObject<User>(jsonData);
-                    if(userData.GioHang==null)
-                    {
-                        gioHang.CartId = Guid.NewGuid();
-                        gioHang.UserId = userData.UserId;
-                        gioHang.CreationDate = DateTime.Now;
-                        _gioHangRepo.Create(gioHang);
-
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        return RedirectToAction("Create", "GioHangCT");
-                    }
-                }
-                else
-                {
-                    return Content("It's too late to apologize");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log exception
-                return Content("An error occurred while creating the shopping cart: " + ex.Message);
-            }
+            //try
+            //{
+            //    if (HttpContext.Session.Keys.Contains("user"))
+            //    {
+            //        var jsonData = HttpContext.Session.GetString("user");
+            //        var userData = JsonConvert.DeserializeObject<User>(jsonData);
+            //        if(userData.GioHang==null)
+            //        {
+            //            gioHang.CartId = Guid.NewGuid();
+            //            gioHang.UserId = userData.UserId;
+            //            gioHang.CreationDate = DateTime.Now;
+            //            _gioHangRepo.Create(gioHang);
+            //            var idgh = gioHang.CartId.ToString();
+            //            ViewData["idgh"] = idgh;
+            //            return RedirectToAction("Create", "GioHangCT");
+            //        }
+            //        else
+            //        {
+            //            return RedirectToAction("Create", "GioHangCT");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return Content("It's too late to apologize");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Log exception
+            //    return Content("An error occurred while creating the shopping cart: " + ex.Message);
+            return View();
         }
 
         // GET: GioHangController/Edit/5
