@@ -40,25 +40,30 @@
 				<td style="width: 180px;">
 					@Html.DisplayFor(modelItem => item.SanPham.Price) đ
 				</td>
-				<td>
-					<div class="d-flex border">
-						<div class="d-flex justify-content-center" style="width:33%">
-							<a>-</a>
+				<td style="width: 180px;">
+					
+					@using (Html.BeginForm("Edit", "GioHangCT", FormMethod.Post))
+                    {
+						<div class="d-flex">
+
+                        @Html.Hidden("cartDetailId", item.CartDetailId) <!-- Thay yourIdValue bằng giá trị id thực tế -->
+                        <div class="form-group">
+                            <input type="text" value="@item.Quantity" name="newQuantity" id="newQuantity" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Ok" class="btn btn-default border" />
+                        </div>
+													
 						</div>
-						<div style="width:33%" class="d-flex justify-content-center">
-							@Html.DisplayFor(modelItem => item.Quantity)
-						</div>
-						<div class="d-flex justify-content-center" style="width:33%">
-							<a>+</a>
-						</div>
-					</div>
+                    }
 
 				</td>
+
 				<td>
 					@{
 						total = item.Quantity * item.SanPham.Price;
 					}
-					<p>@total đ</p>
+					<p id="total_@item.SanPham.ProductId">@total đ</p>
 				</td>
 			</tr>
 		}

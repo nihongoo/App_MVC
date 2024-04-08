@@ -76,7 +76,7 @@ namespace App_MVC.Controllers
             var loginData = HttpContext.Session.GetString("user");
             if (loginData == null)
             {
-                return Content("Chưa đăng nhập, gmak vl");
+                return NotFound("Chưa đăng nhập, gmak vl");
             }
             else
             {
@@ -105,8 +105,13 @@ namespace App_MVC.Controllers
                 return RedirectToAction("Index");
             }
         }
+		//public IActionResult UpdateCart(Guid idghct, int sL)
+		//{
 
-        public IActionResult Create()
+  //          return RedirectToAction("Index","GioHangCT");
+		//}
+
+		public IActionResult Create()
         {
             GetThuongHieu(Guid.Empty);
             GetLoaiSP(Guid.Empty);
@@ -135,6 +140,7 @@ namespace App_MVC.Controllers
                 return Content("An error occurred while creating the product: " + ex.Message);
             }
         }
+
 
         public IActionResult Edit(Guid id)
         {
