@@ -24,14 +24,14 @@ namespace App_MVC.Controllers
         // GetAll danh sách user
         public IActionResult Index(string name)
         {
-            var sessionData = HttpContext.Session.GetString("user");
-            if (sessionData == null)
+            var loginData = HttpContext.Session.GetString("user");
+            if (loginData == null)
             {
                 ViewData["mes"] = "Bạn chưa đăng nhập hoặc phiên đăng nhập đã hết hạn";
             }
             else
             {
-                ViewData["mes"] = $"Chào mừng {sessionData} đến với unfinished square integer";
+                ViewData["mes"] = $"Chào mừng bruh";
             }
 
             var userData = _userRepo.GetAll();

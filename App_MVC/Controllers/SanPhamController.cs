@@ -72,6 +72,7 @@ namespace App_MVC.Controllers
 
         public IActionResult addCart(Guid id, int soLuong)
         {
+            soLuong = 1;
             var loginData = HttpContext.Session.GetString("user");
             if (loginData == null)
             {

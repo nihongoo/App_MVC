@@ -22,8 +22,27 @@ namespace App_MVC.Controllers
         // GET: GioHangCTController
         public ActionResult Index()
         {
-            var a = _gioHangCTRepo.GetAll();
-            return View(a);
+            var gioHangCTData = from ghct in _gioHangCT
+                                join sp in _context.SanPhams
+                                on ghct.ProductId equals sp.ProductId
+                                select new GioHangCT
+                                {
+                                    CartDetailId = ghct.CartDetailId,
+                                    CartId = ghct.CartId,
+                                    ProductId = ghct.ProductId,
+                                    Quantity = ghct.Quantity,
+                                    SanPham = sp
+                                };
+			var loginData = HttpContext.Session.GetString("user");
+			if (loginData == null)
+			{
+				return RedirectToAction("Login","User");
+			}
+            else
+            {
+                var data = gioHangCTData.Where(x => x.CartId.ToString() == loginData);
+                return View(data);
+            }
         }
 
         // GET: GioHangCTController/Details/5

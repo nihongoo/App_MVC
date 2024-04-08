@@ -8,10 +8,10 @@
     <div class="row justify-content-Evenly mt-2 ps-5">
         @foreach (var item in Model)
         {
-            <div class="border rounded-3 m-3 position-relative" style="width: 250px;">
-                <span class="badge bg-success position-absolute">còn hàng</span>
-                <div style="min-height:310px">
-                    <img src="~/img/@item.Image" alt="@item.Image" style="width:100%" class="img-thumbnail">
+            <div class="rounded-3 m-3 position-relative p-0" style="width: 325px;">
+                <span class="badge text-dark position-absolute">còn hàng</span>
+                <div style="min-height:330px">
+                    <img src="~/img/@item.Image" alt="@item.Image" style="width:100%" class="">
                 </div>
                 <div class="d-flex my-2 justify-content-center">
                     <div>
@@ -19,25 +19,17 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <div>
+                    <div class="d-flex align-items-center">
                         <div>
-                            @Html.DisplayFor(modelItem => item.Price)
+                            <p class="font-monospace">@Html.DisplayFor(modelItem => item.Price) đ</p>
                         </div>
                     </div>
-                    <div class="d-flex flex-column mb-2">
-                        @*<a asp-action="addCart" asp-route-id="@item.ProductId" class="btn btn-secondary">Mua ngay</a>*@
-                        @*<a href="#" class="btn btn-success rounded-pill mt-2">
-                            Xem chi tiết
-                        </a>*@
+                    <div class="d-flex">
                         @using (Html.BeginForm("addCart", "SanPham", FormMethod.Post))
                         {
                             @Html.Hidden("id", item.ProductId) <!-- Thay yourIdValue bằng giá trị id thực tế -->
                             <div class="form-group">
-                                <label for="quantity" class="control-label">Quantity:</label>
-                                <input type="text" name="soLuong" id="soLuong" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Add to Cart" class="btn btn-default" />
+                                <input type="submit" value="Add to Cart" class="btn btn-success rounded-pill" />
                             </div>
                         }
                     </div>

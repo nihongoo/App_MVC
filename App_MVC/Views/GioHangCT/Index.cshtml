@@ -1,51 +1,66 @@
 ﻿@model IEnumerable<App_Data.Models.GioHangCT>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+	decimal total = 0;
 }
 
 <h1>Index</h1>
 
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CartDetailId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CartId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CartDetailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CartId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.SanPham.Image)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.SanPham.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.SanPham.Price)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Quantity)
+			</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<img src="~/img/@item.SanPham.Image" alt="@item.SanPham.Image" style="width:180px"
+						class="img-thumbnail">
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.SanPham.Name)
+				</td>
+				<td style="width: 180px;">
+					@Html.DisplayFor(modelItem => item.SanPham.Price) đ
+				</td>
+				<td>
+					<div class="d-flex border">
+						<div class="d-flex justify-content-center" style="width:33%">
+							<a>-</a>
+						</div>
+						<div style="width:33%" class="d-flex justify-content-center">
+							@Html.DisplayFor(modelItem => item.Quantity)
+						</div>
+						<div class="d-flex justify-content-center" style="width:33%">
+							<a>+</a>
+						</div>
+					</div>
+
+				</td>
+				<td>
+					@{
+						total = item.Quantity * item.SanPham.Price;
+					}
+					<p>@total đ</p>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
