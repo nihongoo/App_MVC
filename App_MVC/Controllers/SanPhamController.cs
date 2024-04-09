@@ -26,7 +26,7 @@ namespace App_MVC.Controllers
             _proRepo = new ALLRepository<SanPham>(_product, _context);
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string name)
         {
             var SanPhamData = from sp in _context.SanPhams
                               join lsp in _context.LoaiSPs on sp.ProductTypeId equals lsp.TypeId
@@ -45,7 +45,22 @@ namespace App_MVC.Controllers
                                   LoaiSP = lsp,
                                   ThuongHieu = th
                               };
-            return View(SanPhamData);
+			if (string.IsNullOrEmpty(name))
+			{
+				return View(SanPhamData);
+			}
+			else
+			{
+				var searchData = SanPhamData.Where(x => x.Name.Contains(name)).ToList();
+				if (searchData.Count == 0)
+				{
+					return View(SanPhamData);
+				}
+				else
+				{
+					return View(searchData);
+				}
+			}
         }
 
         public IActionResult SanPhamU()

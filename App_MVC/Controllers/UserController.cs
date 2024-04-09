@@ -110,8 +110,22 @@ namespace App_MVC.Controllers
             {
                 //TempData["Login"] = User.FullName;
                 HttpContext.Session.SetString("user", User.UserId.ToString());
+                var cartDetailCount = _users.Where(x=>x.UserId == User.UserId)
+                .SelectMany(x=>x.GioHang)
+                .SelectMany(x=>x.GioHangCTs)
+                .Count();
+
+                ViewBag.CartDetailCount = cartDetailCount;
                 //var jsonData = JsonConvert.SerializeObject(User);
-                return RedirectToAction("SanPhamU", "SanPham");
+                if (User.Role == "User")
+                {
+                    return RedirectToAction("IndexU", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
             }
             else
             {

@@ -12,6 +12,9 @@ namespace App_MVC.Controllers
         {
             _logger = logger;
         }
+        public IActionResult indexU(){
+            return View();
+        }
 
         public IActionResult Index()
         {

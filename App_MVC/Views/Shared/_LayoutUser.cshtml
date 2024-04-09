@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/App_MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<body>
+    <div class="d-flex justify-content-between bg-dark text-light">
+        <div>
+            email
+        </div>
+        <div>
+            contact
+        </div>
+        @* using Microsoft.CodeAnalysis.Scripting; *@
+    </div>
+    <div class="position-relative">
+        <div class="d-flex justify-content-between align-items-center bg-none">
+            <div>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img style="width:200px" src="~/Logo/Logo_XL_Transparent_Reverse.png" alt="dân chơi cổ ngữ">
+                </a>
+            </div>
+            <div class="d-flex">
+                <div>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success" asp-controller="Home"
+                        asp-action="IndexU">Home</a>
+                </div>
+                <div>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-info" asp-controller="SanPham"
+                        asp-action="SanPhamU">Shop</a>
+                </div>
+                <div>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success">Collection</a>
+                </div>
+                <div>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-info">Blog</a>
+                </div>
+                <div class="position-relative">
+                    @{
+                        var count = ViewBag.CartDetailCount;
+                        if (count == 0)
+                        {
+                            <span class="badge text-light bg-danger position-absolute top-0 end-0 fw-bold rounded-pill"
+                                hidden="true">1</span>
+                        }
+                        else
+                        {
+                            <span
+                                class="badge text-light bg-danger position-absolute top-0 end-0 fw-bold rounded-pill">@count</span>
+                            <a hidden="true" style="color:#ec1d23;" class="fw-bold text-decoration-none" asp-controller="User"
+                                asp-action="Login">Login</a>
+
+                        }
+                    }
+
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success"
+                        asp-controller="GioHangCT" asp-action="Index">Cart</a>
+                </div>
+            </div>
+            <div style="width:200px;">
+                <a style="color:#ec1d23;" class="fw-bold text-decoration-none" asp-controller="User"
+                    asp-action="Login">Login</a>
+            </div>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+
+</html>
