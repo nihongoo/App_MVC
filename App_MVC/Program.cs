@@ -24,7 +24,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Login}");
+    pattern: "{controller=Home}/{action=IndexU}");
 
 app.Run();
 

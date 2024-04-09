@@ -13,11 +13,11 @@
 
 <body>
     <div class="d-flex justify-content-between bg-dark text-light">
-        <div>
-            email
+        <div class="ms-3">
+            haochph36257@fpt.edu.vn
         </div>
-        <div>
-            contact
+        <div class="px-2 me-3">
+            <i class="fa-brands fa-facebook"></i>
         </div>
         @* using Microsoft.CodeAnalysis.Scripting; *@
     </div>
@@ -30,18 +30,18 @@
             </div>
             <div class="d-flex">
                 <div>
-                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success" asp-controller="Home"
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-dark" asp-controller="Home"
                         asp-action="IndexU">Home</a>
                 </div>
                 <div>
-                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-info" asp-controller="SanPham"
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-dark" asp-controller="SanPham"
                         asp-action="SanPhamU">Shop</a>
                 </div>
                 <div>
-                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success">Collection</a>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-dark">Collection</a>
                 </div>
                 <div>
-                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-info">Blog</a>
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-dark">Blog</a>
                 </div>
                 <div class="position-relative">
                     @{
@@ -57,11 +57,10 @@
                                 class="badge text-light bg-danger position-absolute top-0 end-0 fw-bold rounded-pill">@count</span>
                             <a hidden="true" style="color:#ec1d23;" class="fw-bold text-decoration-none" asp-controller="User"
                                 asp-action="Login">Login</a>
-
                         }
                     }
 
-                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-success"
+                    <a class="btn me-2 fst-italic rounded-pill fw-bold text-light btn-dark"
                         asp-controller="GioHangCT" asp-action="Index">Cart</a>
                 </div>
             </div>
