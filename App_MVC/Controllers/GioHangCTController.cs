@@ -37,7 +37,7 @@ namespace App_MVC.Controllers
 			if (loginData == null)
 			{
 				//return RedirectToAction("Login","User");
-				return NotFound("gmak");
+				return NotFound("Chưa đăng nhập");
 			}
 			else
 			{
@@ -65,17 +65,37 @@ namespace App_MVC.Controllers
 		public ActionResult Edit(Guid cartDetailId, int newQuantity)
 		{
 			var loginData = HttpContext.Session.GetString("user");
-			if (loginData == null)
+			var cartDT = _context.GioHangCTs.Find(cartDetailId);
+			var kho = _context.SanPhams.FirstOrDefault(x=>x.ProductId == cartDT.ProductId);
+			if (kho.Quantity + cartDT.Quantity >= newQuantity)
 			{
-				return NotFound("Chưa đăng nhập, gmak vl");
+				if (loginData == null)
+				{
+					return NotFound("Chưa đăng nhập, gmak");
+				}
+				else
+				{
+					var a = _gioHangCTRepo.GetByID(cartDetailId);
+					a.Quantity = newQuantity;
+					if (newQuantity > cartDT.Quantity)
+					{
+						kho.Quantity -= newQuantity;
+                        _context.SanPhams.Update(kho);
+                    }
+					else if (newQuantity < cartDT.Quantity)
+					{
+						kho.Quantity += newQuantity;
+                        _context.SanPhams.Update(kho);
+                    }
+
+                    _context.GioHangCTs.Update(a);
+					_context.SaveChanges();
+					return RedirectToAction("Index");
+				}
 			}
 			else
 			{
-				var a = _gioHangCTRepo.GetByID(cartDetailId);
-				a.Quantity = newQuantity;
-				_context.GioHangCTs.Update(a);
-				_context.SaveChanges();
-				return RedirectToAction("Index");
+				return Content("Sản phẩm này đã hết hàng");
 			}
 		}
 

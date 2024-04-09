@@ -45,22 +45,22 @@ namespace App_MVC.Controllers
                                   LoaiSP = lsp,
                                   ThuongHieu = th
                               };
-			if (string.IsNullOrEmpty(name))
-			{
-				return View(SanPhamData);
-			}
-			else
-			{
-				var searchData = SanPhamData.Where(x => x.Name.Contains(name)).ToList();
-				if (searchData.Count == 0)
-				{
-					return View(SanPhamData);
-				}
-				else
-				{
-					return View(searchData);
-				}
-			}
+            if (string.IsNullOrEmpty(name))
+            {
+                return View(SanPhamData);
+            }
+            else
+            {
+                var searchData = SanPhamData.Where(x => x.Name.Contains(name)).ToList();
+                if (searchData.Count == 0)
+                {
+                    return View(SanPhamData);
+                }
+                else
+                {
+                    return View(searchData);
+                }
+            }
         }
 
         public IActionResult SanPhamU()
@@ -91,42 +91,55 @@ namespace App_MVC.Controllers
             var loginData = HttpContext.Session.GetString("user");
             if (loginData == null)
             {
-                return NotFound("Chưa đăng nhập, gmak vl");
+                return NotFound("Chưa đăng nhập, gmak");
             }
             else
             {
                 Guid UserID = Guid.Parse(loginData);//lấy ra id cua khách-giỏ hàng
-                
+
                 var allCart = _context.GioHangCTs.FirstOrDefault(x => x.ProductId == id && x.CartId == UserID);
-                if (allCart != null)
+                var kho = _context.SanPhams.FirstOrDefault(x => x.ProductId == id);
+                if (kho.Quantity > 0)
                 {
-                    //check số lượng có lớn hơn với số tồn kho ko
-                    allCart.Quantity =  allCart.Quantity + soLuong;
-                    _context.GioHangCTs.Update(allCart);
-                    _context.SaveChanges();
+                    if (allCart != null)
+                    {
+                        //check số lượng có lớn hơn với số tồn kho ko
+                        allCart.Quantity = allCart.Quantity + soLuong;
+                        kho.Quantity -= 1;
+                        _context.SanPhams.Update(kho);
+                        _context.GioHangCTs.Update(allCart);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        GioHangCT ghct = new GioHangCT()
+                        {
+                            CartDetailId = Guid.NewGuid(),
+                            CartId = UserID,
+                            Quantity = soLuong,
+                            ProductId = id
+                        };
+                        kho.Quantity = -1;
+                        _context.SanPhams.Update(kho);
+                        _context.GioHangCTs.Add(ghct);
+                        _context.SaveChanges();
+                    }
+                    return RedirectToAction("SanPhamU");
+
                 }
                 else
                 {
-                    GioHangCT ghct = new GioHangCT()
-                    {
-                        CartDetailId = Guid.NewGuid(),
-                        CartId = UserID,
-                        Quantity = soLuong,
-                        ProductId = id
-                    };
-                    _context.GioHangCTs.Add(ghct); 
-                    _context.SaveChanges();
+                    return Content("Sản phẩm này đã hết hàng");
                 }
-                return RedirectToAction("Index");
             }
         }
-		//public IActionResult UpdateCart(Guid idghct, int sL)
-		//{
+        //public IActionResult UpdateCart(Guid idghct, int sL)
+        //{
 
-  //          return RedirectToAction("Index","GioHangCT");
-		//}
+        //          return RedirectToAction("Index","GioHangCT");
+        //}
 
-		public IActionResult Create()
+        public IActionResult Create()
         {
             GetThuongHieu(Guid.Empty);
             GetLoaiSP(Guid.Empty);
@@ -138,7 +151,7 @@ namespace App_MVC.Controllers
         {
             try
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "img", img.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", img.FileName);
                 var stream = new FileStream(path, FileMode.Create);
                 {
                     img.CopyTo(stream);
