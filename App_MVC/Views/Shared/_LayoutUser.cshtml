@@ -45,8 +45,8 @@
                 </div>
                 <div class="position-relative">
                     @{
-                        var count = ViewBag.CartDetailCount;
-                        if (count == 0)
+                        var count = Context.Request.HttpContext.Session.GetString("count");
+                        if (count == null)
                         {
                             <span class="badge text-light bg-danger position-absolute top-0 end-0 fw-bold rounded-pill"
                                 hidden="true">1</span>

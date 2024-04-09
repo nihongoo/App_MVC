@@ -99,25 +99,18 @@ namespace App_MVC.Controllers
 			}
 		}
 
-
-		// GET: GioHangCTController/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		// POST: GioHangCTController/Delete/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(Guid id)
 		{
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				var a = _context.GioHangCTs.Find(id);
+				_context.GioHangCTs.Remove(a);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "GioHangCT");
 			}
 			catch
 			{
-				return View();
+				return RedirectToAction("Index", "GioHangCT");
 			}
 		}
 	}

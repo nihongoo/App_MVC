@@ -27,6 +27,7 @@
 						@Html.DisplayNameFor(model => model.Quantity)
 					</th>
 					<th>Total</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,6 +68,16 @@
 								total = item.Quantity * item.SanPham.Price;
 							}
 							<p id="total_@item.SanPham.ProductId">@total đ</p>
+						</td>
+						<td>
+							@using (Html.BeginForm("Delete", "GioHangCT", FormMethod.Post))
+							{
+								@Html.Hidden("id", item.CartDetailId) <!-- Thay yourIdValue bằng giá trị id thực tế -->
+								<div class="form-group">
+									<input type="submit" value="Delete"
+										class="btn btn-danger text-light fw-bold rounded-pill" />
+								</div>
+							}
 						</td>
 					</tr>
 				}

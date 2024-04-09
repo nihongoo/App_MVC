@@ -110,10 +110,11 @@ namespace App_MVC.Controllers
             {
                 //TempData["Login"] = User.FullName;
                 HttpContext.Session.SetString("user", User.UserId.ToString());
-                var cartDetailCount = _users.Where(x=>x.UserId == User.UserId)
+                int cartDetailCount = _users.Where(x=>x.UserId == User.UserId)
                 .SelectMany(x=>x.GioHang)
                 .SelectMany(x=>x.GioHangCTs)
                 .Count();
+                HttpContext.Session.SetString("count", cartDetailCount.ToString());
 
                 ViewBag.CartDetailCount = cartDetailCount;
                 //var jsonData = JsonConvert.SerializeObject(User);
